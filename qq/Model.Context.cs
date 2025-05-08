@@ -13,10 +13,10 @@ namespace qq
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class k8sLoverEntities : DbContext
+    public partial class HorseClubDBEntities : DbContext
     {
-        public k8sLoverEntities()
-            : base("name=k8sLoverEntities")
+        public HorseClubDBEntities()
+            : base("name=HorseClubDBEntities")
         {
         }
     
@@ -25,22 +25,17 @@ namespace qq
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AvailabilityMetrics> AvailabilityMetrics { get; set; }
-        public virtual DbSet<Companies> Companies { get; set; }
-        public virtual DbSet<Countries> Countries { get; set; }
-        public virtual DbSet<Currencies> Currencies { get; set; }
-        public virtual DbSet<ErrorRateMetrics> ErrorRateMetrics { get; set; }
-        public virtual DbSet<Incidents> Incidents { get; set; }
-        public virtual DbSet<IncidentTypes> IncidentTypes { get; set; }
-        public virtual DbSet<News> News { get; set; }
-        public virtual DbSet<RemediationActions> RemediationActions { get; set; }
-        public virtual DbSet<ResponseTimeMetrics> ResponseTimeMetrics { get; set; }
-        public virtual DbSet<RootCauseCategories> RootCauseCategories { get; set; }
-        public virtual DbSet<RootCauses> RootCauses { get; set; }
-        public virtual DbSet<SREMetrics> SREMetrics { get; set; }
-        public virtual DbSet<StocksData> StocksData { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<Teams> Teams { get; set; }
+        public virtual DbSet<Clients> Clients { get; set; }
+        public virtual DbSet<Equipment> Equipment { get; set; }
+        public virtual DbSet<EquipmentUsage> EquipmentUsage { get; set; }
+        public virtual DbSet<Events> Events { get; set; }
+        public virtual DbSet<Horses> Horses { get; set; }
+        public virtual DbSet<Lessons> Lessons { get; set; }
+        public virtual DbSet<Payments> Payments { get; set; }
+        public virtual DbSet<Rentals> Rentals { get; set; }
+        public virtual DbSet<Staff> Staff { get; set; }
+        public virtual DbSet<StaffSchedule> StaffSchedule { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<VetVisits> VetVisits { get; set; }
     }
 }

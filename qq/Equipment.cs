@@ -12,18 +12,20 @@ namespace qq
     using System;
     using System.Collections.Generic;
     
-    public partial class Currencies
+    public partial class Equipment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Currencies()
+        public Equipment()
         {
-            this.RemediationActions = new HashSet<RemediationActions>();
+            this.EquipmentUsage = new HashSet<EquipmentUsage>();
         }
     
-        public string code { get; set; }
-        public string name { get; set; }
+        public int EquipmentID { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Condition { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RemediationActions> RemediationActions { get; set; }
+        public virtual ICollection<EquipmentUsage> EquipmentUsage { get; set; }
     }
 }

@@ -12,11 +12,16 @@ namespace qq
     using System;
     using System.Collections.Generic;
     
-    public partial class ErrorRateMetrics
+    public partial class EquipmentUsage
     {
-        public int metric_id { get; set; }
-        public Nullable<decimal> error_rate { get; set; }
+        public int UsageID { get; set; }
+        public Nullable<int> EquipmentID { get; set; }
+        public Nullable<int> LessonID { get; set; }
+        public Nullable<int> RentalID { get; set; }
+        public Nullable<System.DateTime> UsageDate { get; set; }
     
-        public virtual SREMetrics SREMetrics { get; set; }
+        public virtual Equipment Equipment { get; set; }
+        public virtual Lessons Lessons { get; set; }
+        public virtual Rentals Rentals { get; set; }
     }
 }

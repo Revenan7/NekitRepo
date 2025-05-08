@@ -12,15 +12,15 @@ namespace qq
     using System;
     using System.Collections.Generic;
     
-    public partial class SREMetrics
+    public partial class VetVisits
     {
-        public int id { get; set; }
-        public Nullable<int> company_id { get; set; }
-        public Nullable<System.DateTimeOffset> timestamp { get; set; }
+        public int VisitID { get; set; }
+        public Nullable<int> HorseID { get; set; }
+        public Nullable<int> StaffID { get; set; }
+        public Nullable<System.DateTime> VisitDate { get; set; }
+        public string Notes { get; set; }
     
-        public virtual AvailabilityMetrics AvailabilityMetrics { get; set; }
-        public virtual Companies Companies { get; set; }
-        public virtual ErrorRateMetrics ErrorRateMetrics { get; set; }
-        public virtual ResponseTimeMetrics ResponseTimeMetrics { get; set; }
+        public virtual Horses Horses { get; set; }
+        public virtual Staff Staff { get; set; }
     }
 }

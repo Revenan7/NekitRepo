@@ -12,31 +12,31 @@ namespace qq
     using System;
     using System.Collections.Generic;
     
-    public partial class Incidents
+    public partial class Clients
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Incidents()
+        public Clients()
         {
-            this.News = new HashSet<News>();
-            this.RemediationActions = new HashSet<RemediationActions>();
-            this.RootCauses = new HashSet<RootCauses>();
-            this.IncidentTypes = new HashSet<IncidentTypes>();
+            this.Payments = new HashSet<Payments>();
+            this.Rentals = new HashSet<Rentals>();
+            this.Events = new HashSet<Events>();
+            this.Lessons = new HashSet<Lessons>();
         }
     
-        public int id { get; set; }
-        public Nullable<int> company_id { get; set; }
-        public Nullable<System.DateTimeOffset> start_time { get; set; }
-        public Nullable<System.DateTimeOffset> end_time { get; set; }
-        public string description { get; set; }
+        public int ClientID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public Nullable<System.DateTime> JoinDate { get; set; }
     
-        public virtual Companies Companies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<News> News { get; set; }
+        public virtual ICollection<Payments> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RemediationActions> RemediationActions { get; set; }
+        public virtual ICollection<Rentals> Rentals { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RootCauses> RootCauses { get; set; }
+        public virtual ICollection<Events> Events { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IncidentTypes> IncidentTypes { get; set; }
+        public virtual ICollection<Lessons> Lessons { get; set; }
     }
 }

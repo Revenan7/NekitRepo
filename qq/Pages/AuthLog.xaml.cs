@@ -34,17 +34,17 @@ namespace qq.Pages
                 return string.Concat(hash.ComputeHash(Encoding.UTF8.GetBytes(password)).Select(x => x.ToString("X2")));
             }
         }
-        public void AddItems()
-        {
-            Companies qq = new Companies();
-            qq.industry = "test";
-            qq.name = "test";
-            BDconnection.DB.Companies.Add(qq);
-            //BDconnection.
-            BDconnection.DB.SaveChanges();
+        //public void AddItems()
+        //{
+        //    Companies qq = new Companies();
+        //    qq.industry = "test";
+        //    qq.name = "test";
+        //    BDconnection.DB.Companies.Add(qq);
+        //    //BDconnection.
+        //    BDconnection.DB.SaveChanges();
 
 
-        }
+        //}
 
         private void signInButton_Click(object sender, RoutedEventArgs e)
         {
@@ -59,7 +59,7 @@ namespace qq.Pages
 
             var user = BDconnection.DB.Users
             .AsNoTracking()
-            .FirstOrDefault(u => u.login == loginTextBox.Text && u.password == _password);
+            .FirstOrDefault(u => u.Login == loginTextBox.Text && u.Password == _password);
 
             if (user == null) { MessageBox.Show("Пользователь с такими данными не найден!"); return; }
 

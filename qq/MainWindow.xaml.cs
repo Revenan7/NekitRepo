@@ -26,17 +26,17 @@ namespace qq
             LoadCompanies();
         }
 
-        public void AddItems()
-        {
-            Companies qq = new Companies();
-            qq.industry = "test";
-            qq.name = "test";
-            BDconnection.DB.Companies.Add(qq);
-            //BDconnection.
-            BDconnection.DB.SaveChanges();
+        //public void AddItems()
+        //{
+        //    Companies qq = new Companies();
+        //    qq.industry = "test";
+        //    qq.name = "test";
+        //    BDconnection.DB.Companies.Add(qq);
+        //    //BDconnection.
+        //    BDconnection.DB.SaveChanges();
 
             
-        }
+        //}
         public MainWindow()
         {
             thisWindow = this;

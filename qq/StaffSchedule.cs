@@ -12,16 +12,14 @@ namespace qq
     using System;
     using System.Collections.Generic;
     
-    public partial class News
+    public partial class StaffSchedule
     {
-        public int id { get; set; }
-        public Nullable<int> incident_id { get; set; }
-        public Nullable<System.DateTimeOffset> published_at { get; set; }
-        public string title { get; set; }
-        public string source { get; set; }
-        public Nullable<int> popularity { get; set; }
-        public Nullable<int> sentiment_score { get; set; }
+        public int ScheduleID { get; set; }
+        public Nullable<int> StaffID { get; set; }
+        public Nullable<System.DateTime> WorkDate { get; set; }
+        public Nullable<System.TimeSpan> StartTime { get; set; }
+        public Nullable<System.TimeSpan> EndTime { get; set; }
     
-        public virtual Incidents Incidents { get; set; }
+        public virtual Staff Staff { get; set; }
     }
 }

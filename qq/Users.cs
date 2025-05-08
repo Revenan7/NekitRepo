@@ -14,12 +14,10 @@ namespace qq
     
     public partial class Users
     {
-        public int id { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string login { get; set; }
-        public string password { get; set; }
-        public string email { get; set; }
-        public string phone { get; set; }
+        public int UserID { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public string Role { get; set; }
+        public string Email { get; set; }
     }
 }

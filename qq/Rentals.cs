@@ -12,18 +12,23 @@ namespace qq
     using System;
     using System.Collections.Generic;
     
-    public partial class RootCauseCategories
+    public partial class Rentals
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RootCauseCategories()
+        public Rentals()
         {
-            this.RootCauses = new HashSet<RootCauses>();
+            this.EquipmentUsage = new HashSet<EquipmentUsage>();
         }
     
-        public int id { get; set; }
-        public string name { get; set; }
+        public int RentalID { get; set; }
+        public Nullable<System.DateTime> RentalDate { get; set; }
+        public Nullable<System.TimeSpan> RentalTime { get; set; }
+        public Nullable<int> ClientID { get; set; }
+        public Nullable<int> HorseID { get; set; }
     
+        public virtual Clients Clients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RootCauses> RootCauses { get; set; }
+        public virtual ICollection<EquipmentUsage> EquipmentUsage { get; set; }
+        public virtual Horses Horses { get; set; }
     }
 }

@@ -12,20 +12,20 @@ namespace qq
     using System;
     using System.Collections.Generic;
     
-    public partial class IncidentTypes
+    public partial class Events
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public IncidentTypes()
+        public Events()
         {
-            this.Incidents = new HashSet<Incidents>();
+            this.Clients = new HashSet<Clients>();
         }
     
-        public int id { get; set; }
-        public string name { get; set; }
-        public Nullable<int> impact_level { get; set; }
-        public Nullable<int> recovery_time_goal_minutes { get; set; }
+        public int EventID { get; set; }
+        public string EventName { get; set; }
+        public Nullable<System.DateTime> EventDate { get; set; }
+        public Nullable<System.TimeSpan> EventTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Incidents> Incidents { get; set; }
+        public virtual ICollection<Clients> Clients { get; set; }
     }
 }

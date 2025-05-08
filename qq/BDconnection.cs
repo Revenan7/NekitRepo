@@ -9,14 +9,14 @@ namespace qq
 {
     internal class BDconnection
     {
-        private static k8sLoverEntities _k8SLoverEntities;
+        private static HorseClubDBEntities _k8SLoverEntities;
 
-        public static k8sLoverEntities DB = GetContext();
-        public static k8sLoverEntities GetContext()
+        public static HorseClubDBEntities DB = GetContext();
+        public static HorseClubDBEntities GetContext()
         {
             if(_k8SLoverEntities == null )
             {
-                _k8SLoverEntities = new k8sLoverEntities();
+                _k8SLoverEntities = new HorseClubDBEntities();
             }
             return _k8SLoverEntities;
         }

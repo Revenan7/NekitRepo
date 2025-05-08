@@ -109,26 +109,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AvailabilityMetrics.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="BDconnection.cs" />
-    <Compile Include="Companies.cs">
+    <Compile Include="Clients.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Countries.cs">
+    <Compile Include="Equipment.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Currencies.cs">
+    <Compile Include="EquipmentUsage.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="ErrorRateMetrics.cs">
+    <Compile Include="Events.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Incidents.cs">
+    <Compile Include="Horses.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="IncidentTypes.cs">
+    <Compile Include="Lessons.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model.Context.cs">
@@ -146,9 +143,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="News.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Pages\AuthLog.xaml.cs">
       <DependentUpon>AuthLog.xaml</DependentUpon>
     </Compile>
@@ -161,31 +155,22 @@
     <Compile Include="Pages\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RemediationActions.cs">
+    <Compile Include="Payments.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="ResponseTimeMetrics.cs">
+    <Compile Include="Rentals.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="RootCauseCategories.cs">
+    <Compile Include="Staff.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="RootCauses.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SREMetrics.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StocksData.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Teams.cs">
+    <Compile Include="StaffSchedule.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Users.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VetVisits.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">

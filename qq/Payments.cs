@@ -12,11 +12,14 @@ namespace qq
     using System;
     using System.Collections.Generic;
     
-    public partial class ResponseTimeMetrics
+    public partial class Payments
     {
-        public int metric_id { get; set; }
-        public Nullable<decimal> avg_response_time { get; set; }
+        public int PaymentID { get; set; }
+        public Nullable<System.DateTime> PaymentDate { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public Nullable<int> ClientID { get; set; }
+        public string ServiceType { get; set; }
     
-        public virtual SREMetrics SREMetrics { get; set; }
+        public virtual Clients Clients { get; set; }
     }
 }

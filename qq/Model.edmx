@@ -4,894 +4,756 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="k8sLoverModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AvailabilityMetrics">
+      <Schema Namespace="HorseClubDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
           <Key>
-            <PropertyRef Name="metric_id" />
+            <PropertyRef Name="ClientID" />
           </Key>
-          <Property Name="metric_id" Type="int" Nullable="false" />
-          <Property Name="availability" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="Phone" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="JoinDate" Type="date" />
         </EntityType>
-        <EntityType Name="Companies">
+        <EntityType Name="Equipment">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="EquipmentID" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
-          <Property Name="industry" Type="varchar" MaxLength="255" />
-          <Property Name="country_id" Type="int" />
+          <Property Name="EquipmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Type" Type="varchar" MaxLength="100" />
+          <Property Name="Condition" Type="varchar" MaxLength="100" />
         </EntityType>
-        <EntityType Name="Countries">
+        <EntityType Name="EquipmentUsage">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="UsageID" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="UsageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipmentID" Type="int" />
+          <Property Name="LessonID" Type="int" />
+          <Property Name="RentalID" Type="int" />
+          <Property Name="UsageDate" Type="date" />
         </EntityType>
-        <EntityType Name="Currencies">
+        <EntityType Name="EventParticipants">
           <Key>
-            <PropertyRef Name="code" />
+            <PropertyRef Name="EventID" />
+            <PropertyRef Name="ClientID" />
           </Key>
-          <Property Name="code" Type="varchar" MaxLength="3" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="ErrorRateMetrics">
+        <EntityType Name="Events">
           <Key>
-            <PropertyRef Name="metric_id" />
+            <PropertyRef Name="EventID" />
           </Key>
-          <Property Name="metric_id" Type="int" Nullable="false" />
-          <Property Name="error_rate" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="EventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventName" Type="varchar" MaxLength="100" />
+          <Property Name="EventDate" Type="date" />
+          <Property Name="EventTime" Type="time" Precision="7" />
         </EntityType>
-        <EntityType Name="Incidents">
+        <EntityType Name="Horses">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="HorseID" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="company_id" Type="int" />
-          <Property Name="start_time" Type="datetimeoffset" Precision="7" />
-          <Property Name="end_time" Type="datetimeoffset" Precision="7" />
-          <Property Name="description" Type="text" />
+          <Property Name="HorseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Breed" Type="varchar" MaxLength="100" />
+          <Property Name="BirthYear" Type="int" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="IncidentToRootCauses">
+        <EntityType Name="LessonParticipants">
           <Key>
-            <PropertyRef Name="incident_id" />
-            <PropertyRef Name="root_cause_id" />
+            <PropertyRef Name="LessonID" />
+            <PropertyRef Name="ClientID" />
           </Key>
-          <Property Name="incident_id" Type="int" Nullable="false" />
-          <Property Name="root_cause_id" Type="int" Nullable="false" />
+          <Property Name="LessonID" Type="int" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="IncidentToTypes">
+        <EntityType Name="Lessons">
           <Key>
-            <PropertyRef Name="incident_id" />
-            <PropertyRef Name="type_id" />
+            <PropertyRef Name="LessonID" />
           </Key>
-          <Property Name="incident_id" Type="int" Nullable="false" />
-          <Property Name="type_id" Type="int" Nullable="false" />
+          <Property Name="LessonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LessonDate" Type="date" />
+          <Property Name="LessonTime" Type="time" Precision="7" />
+          <Property Name="StaffID" Type="int" />
+          <Property Name="HorseID" Type="int" />
         </EntityType>
-        <EntityType Name="IncidentTypes">
+        <EntityType Name="Payments">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="PaymentID" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
-          <Property Name="impact_level" Type="int" />
-          <Property Name="recovery_time_goal_minutes" Type="int" />
+          <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentDate" Type="date" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="ServiceType" Type="varchar" MaxLength="100" />
         </EntityType>
-        <EntityType Name="News">
+        <EntityType Name="Rentals">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="RentalID" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="incident_id" Type="int" />
-          <Property Name="published_at" Type="datetimeoffset" Precision="7" />
-          <Property Name="title" Type="varchar" MaxLength="255" />
-          <Property Name="source" Type="varchar" MaxLength="255" />
-          <Property Name="popularity" Type="int" />
-          <Property Name="sentiment_score" Type="int" />
+          <Property Name="RentalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RentalDate" Type="date" />
+          <Property Name="RentalTime" Type="time" Precision="7" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="HorseID" Type="int" />
         </EntityType>
-        <EntityType Name="RemediationActions">
+        <EntityType Name="Staff">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="StaffID" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="incident_id" Type="int" />
-          <Property Name="team_id" Type="int" />
-          <Property Name="action_description" Type="text" />
-          <Property Name="loss" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="currency_code" Type="varchar" MaxLength="3" />
+          <Property Name="StaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="Role" Type="varchar" MaxLength="100" />
+          <Property Name="Phone" Type="varchar" MaxLength="20" />
+          <Property Name="HireDate" Type="date" />
         </EntityType>
-        <EntityType Name="ResponseTimeMetrics">
+        <EntityType Name="StaffSchedule">
           <Key>
-            <PropertyRef Name="metric_id" />
+            <PropertyRef Name="ScheduleID" />
           </Key>
-          <Property Name="metric_id" Type="int" Nullable="false" />
-          <Property Name="avg_response_time" Type="decimal" Precision="18" Scale="0" />
-        </EntityType>
-        <EntityType Name="RootCauseCategories">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
-        </EntityType>
-        <EntityType Name="RootCauses">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="category_id" Type="int" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
-          <Property Name="description" Type="text" />
-        </EntityType>
-        <EntityType Name="SREMetrics">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="company_id" Type="int" />
-          <Property Name="timestamp" Type="datetimeoffset" Precision="7" />
-        </EntityType>
-        <EntityType Name="StocksData">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="company_id" Type="int" />
-          <Property Name="timestamp" Type="datetimeoffset" Precision="7" />
-          <Property Name="price" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="volume" Type="int" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="Teams">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="company_id" Type="int" />
-          <Property Name="name" Type="varchar" MaxLength="255" />
-          <Property Name="specialization" Type="varchar" MaxLength="255" />
+          <Property Name="ScheduleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StaffID" Type="int" />
+          <Property Name="WorkDate" Type="date" />
+          <Property Name="StartTime" Type="time" Precision="7" />
+          <Property Name="EndTime" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="first_name" Type="nvarchar" MaxLength="255" />
-          <Property Name="last_name" Type="nvarchar" MaxLength="255" />
-          <Property Name="login" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="password" Type="text" Nullable="false" />
-          <Property Name="email" Type="nvarchar" MaxLength="255" />
-          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Availabil__metri__534D60F1">
-          <End Role="SREMetrics" Type="Self.SREMetrics" Multiplicity="1" />
-          <End Role="AvailabilityMetrics" Type="Self.AvailabilityMetrics" Multiplicity="0..1" />
+        <EntityType Name="VetVisits">
+          <Key>
+            <PropertyRef Name="VisitID" />
+          </Key>
+          <Property Name="VisitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HorseID" Type="int" />
+          <Property Name="StaffID" Type="int" />
+          <Property Name="VisitDate" Type="date" />
+          <Property Name="Notes" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK__Equipment__Equip__440B1D61">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="EquipmentUsage" Type="Self.EquipmentUsage" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SREMetrics">
-              <PropertyRef Name="id" />
+            <Principal Role="Equipment">
+              <PropertyRef Name="EquipmentID" />
             </Principal>
-            <Dependent Role="AvailabilityMetrics">
-              <PropertyRef Name="metric_id" />
+            <Dependent Role="EquipmentUsage">
+              <PropertyRef Name="EquipmentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Companies__count__30F848ED">
-          <End Role="Countries" Type="Self.Countries" Multiplicity="0..1" />
-          <End Role="Companies" Type="Self.Companies" Multiplicity="*" />
+        <Association Name="FK__Equipment__Lesso__44FF419A">
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="0..1" />
+          <End Role="EquipmentUsage" Type="Self.EquipmentUsage" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Countries">
-              <PropertyRef Name="id" />
+            <Principal Role="Lessons">
+              <PropertyRef Name="LessonID" />
             </Principal>
-            <Dependent Role="Companies">
-              <PropertyRef Name="country_id" />
+            <Dependent Role="EquipmentUsage">
+              <PropertyRef Name="LessonID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ErrorRate__metri__5AEE82B9">
-          <End Role="SREMetrics" Type="Self.SREMetrics" Multiplicity="1" />
-          <End Role="ErrorRateMetrics" Type="Self.ErrorRateMetrics" Multiplicity="0..1" />
+        <Association Name="FK__Equipment__Renta__45F365D3">
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="0..1" />
+          <End Role="EquipmentUsage" Type="Self.EquipmentUsage" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SREMetrics">
-              <PropertyRef Name="id" />
+            <Principal Role="Rentals">
+              <PropertyRef Name="RentalID" />
             </Principal>
-            <Dependent Role="ErrorRateMetrics">
-              <PropertyRef Name="metric_id" />
+            <Dependent Role="EquipmentUsage">
+              <PropertyRef Name="RentalID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Incidents__compa__3B75D760">
-          <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
-          <End Role="Incidents" Type="Self.Incidents" Multiplicity="*" />
+        <Association Name="FK__EventPart__Clien__3F466844">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="EventParticipants" Type="Self.EventParticipants" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Companies">
-              <PropertyRef Name="id" />
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
             </Principal>
-            <Dependent Role="Incidents">
-              <PropertyRef Name="company_id" />
+            <Dependent Role="EventParticipants">
+              <PropertyRef Name="ClientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__IncidentT__incid__3E52440B">
-          <End Role="Incidents" Type="Self.Incidents" Multiplicity="1" />
-          <End Role="IncidentToTypes" Type="Self.IncidentToTypes" Multiplicity="*" />
+        <Association Name="FK__EventPart__Event__3E52440B">
+          <End Role="Events" Type="Self.Events" Multiplicity="1" />
+          <End Role="EventParticipants" Type="Self.EventParticipants" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Incidents">
-              <PropertyRef Name="id" />
+            <Principal Role="Events">
+              <PropertyRef Name="EventID" />
             </Principal>
-            <Dependent Role="IncidentToTypes">
-              <PropertyRef Name="incident_id" />
+            <Dependent Role="EventParticipants">
+              <PropertyRef Name="EventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__IncidentT__incid__4222D4EF">
-          <End Role="Incidents" Type="Self.Incidents" Multiplicity="1" />
-          <End Role="IncidentToRootCauses" Type="Self.IncidentToRootCauses" Multiplicity="*" />
+        <Association Name="FK__LessonPar__Clien__2F10007B">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="LessonParticipants" Type="Self.LessonParticipants" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Incidents">
-              <PropertyRef Name="id" />
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
             </Principal>
-            <Dependent Role="IncidentToRootCauses">
-              <PropertyRef Name="incident_id" />
+            <Dependent Role="LessonParticipants">
+              <PropertyRef Name="ClientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__IncidentT__root___4316F928">
-          <End Role="RootCauses" Type="Self.RootCauses" Multiplicity="1" />
-          <End Role="IncidentToRootCauses" Type="Self.IncidentToRootCauses" Multiplicity="*" />
+        <Association Name="FK__LessonPar__Lesso__2E1BDC42">
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="1" />
+          <End Role="LessonParticipants" Type="Self.LessonParticipants" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RootCauses">
-              <PropertyRef Name="id" />
+            <Principal Role="Lessons">
+              <PropertyRef Name="LessonID" />
             </Principal>
-            <Dependent Role="IncidentToRootCauses">
-              <PropertyRef Name="root_cause_id" />
+            <Dependent Role="LessonParticipants">
+              <PropertyRef Name="LessonID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__IncidentT__type___3F466844">
-          <End Role="IncidentTypes" Type="Self.IncidentTypes" Multiplicity="1" />
-          <End Role="IncidentToTypes" Type="Self.IncidentToTypes" Multiplicity="*" />
+        <Association Name="FK__Lessons__HorseID__2B3F6F97">
+          <End Role="Horses" Type="Self.Horses" Multiplicity="0..1" />
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="IncidentTypes">
-              <PropertyRef Name="id" />
+            <Principal Role="Horses">
+              <PropertyRef Name="HorseID" />
             </Principal>
-            <Dependent Role="IncidentToTypes">
-              <PropertyRef Name="type_id" />
+            <Dependent Role="Lessons">
+              <PropertyRef Name="HorseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__News__incident_i__60A75C0F">
-          <End Role="Incidents" Type="Self.Incidents" Multiplicity="0..1" />
-          <End Role="News" Type="Self.News" Multiplicity="*" />
+        <Association Name="FK__Lessons__StaffID__2A4B4B5E">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Incidents">
-              <PropertyRef Name="id" />
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
             </Principal>
-            <Dependent Role="News">
-              <PropertyRef Name="incident_id" />
+            <Dependent Role="Lessons">
+              <PropertyRef Name="StaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Remediati__curre__4CA06362">
-          <End Role="Currencies" Type="Self.Currencies" Multiplicity="0..1" />
-          <End Role="RemediationActions" Type="Self.RemediationActions" Multiplicity="*" />
+        <Association Name="FK__Payments__Client__31EC6D26">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Currencies">
-              <PropertyRef Name="code" />
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
             </Principal>
-            <Dependent Role="RemediationActions">
-              <PropertyRef Name="currency_code" />
+            <Dependent Role="Payments">
+              <PropertyRef Name="ClientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Remediati__incid__4AB81AF0">
-          <End Role="Incidents" Type="Self.Incidents" Multiplicity="0..1" />
-          <End Role="RemediationActions" Type="Self.RemediationActions" Multiplicity="*" />
+        <Association Name="FK__Rentals__ClientI__34C8D9D1">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Incidents">
-              <PropertyRef Name="id" />
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
             </Principal>
-            <Dependent Role="RemediationActions">
-              <PropertyRef Name="incident_id" />
+            <Dependent Role="Rentals">
+              <PropertyRef Name="ClientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Remediati__team___4BAC3F29">
-          <End Role="Teams" Type="Self.Teams" Multiplicity="0..1" />
-          <End Role="RemediationActions" Type="Self.RemediationActions" Multiplicity="*" />
+        <Association Name="FK__Rentals__HorseID__35BCFE0A">
+          <End Role="Horses" Type="Self.Horses" Multiplicity="0..1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Teams">
-              <PropertyRef Name="id" />
+            <Principal Role="Horses">
+              <PropertyRef Name="HorseID" />
             </Principal>
-            <Dependent Role="RemediationActions">
-              <PropertyRef Name="team_id" />
+            <Dependent Role="Rentals">
+              <PropertyRef Name="HorseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ResponseT__metri__571DF1D5">
-          <End Role="SREMetrics" Type="Self.SREMetrics" Multiplicity="1" />
-          <End Role="ResponseTimeMetrics" Type="Self.ResponseTimeMetrics" Multiplicity="0..1" />
+        <Association Name="FK__StaffSche__Staff__48CFD27E">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="StaffSchedule" Type="Self.StaffSchedule" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SREMetrics">
-              <PropertyRef Name="id" />
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
             </Principal>
-            <Dependent Role="ResponseTimeMetrics">
-              <PropertyRef Name="metric_id" />
+            <Dependent Role="StaffSchedule">
+              <PropertyRef Name="StaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RootCause__categ__38996AB5">
-          <End Role="RootCauseCategories" Type="Self.RootCauseCategories" Multiplicity="0..1" />
-          <End Role="RootCauses" Type="Self.RootCauses" Multiplicity="*" />
+        <Association Name="FK__VetVisits__Horse__38996AB5">
+          <End Role="Horses" Type="Self.Horses" Multiplicity="0..1" />
+          <End Role="VetVisits" Type="Self.VetVisits" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RootCauseCategories">
-              <PropertyRef Name="id" />
+            <Principal Role="Horses">
+              <PropertyRef Name="HorseID" />
             </Principal>
-            <Dependent Role="RootCauses">
-              <PropertyRef Name="category_id" />
+            <Dependent Role="VetVisits">
+              <PropertyRef Name="HorseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SREMetric__compa__4F7CD00D">
-          <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
-          <End Role="SREMetrics" Type="Self.SREMetrics" Multiplicity="*" />
+        <Association Name="FK__VetVisits__Staff__398D8EEE">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="VetVisits" Type="Self.VetVisits" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Companies">
-              <PropertyRef Name="id" />
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
             </Principal>
-            <Dependent Role="SREMetrics">
-              <PropertyRef Name="company_id" />
+            <Dependent Role="VetVisits">
+              <PropertyRef Name="StaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__StocksDat__compa__5DCAEF64">
-          <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
-          <End Role="StocksData" Type="Self.StocksData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Companies">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="StocksData">
-              <PropertyRef Name="company_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Teams__company_i__47DBAE45">
-          <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
-          <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Companies">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Teams">
-              <PropertyRef Name="company_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="k8sLoverModelStoreContainer">
-          <EntitySet Name="AvailabilityMetrics" EntityType="Self.AvailabilityMetrics" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Currencies" EntityType="Self.Currencies" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ErrorRateMetrics" EntityType="Self.ErrorRateMetrics" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Incidents" EntityType="Self.Incidents" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IncidentToRootCauses" EntityType="Self.IncidentToRootCauses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IncidentToTypes" EntityType="Self.IncidentToTypes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IncidentTypes" EntityType="Self.IncidentTypes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RemediationActions" EntityType="Self.RemediationActions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ResponseTimeMetrics" EntityType="Self.ResponseTimeMetrics" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RootCauseCategories" EntityType="Self.RootCauseCategories" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RootCauses" EntityType="Self.RootCauses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SREMetrics" EntityType="Self.SREMetrics" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="StocksData" EntityType="Self.StocksData" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="HorseClubDBModelStoreContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentUsage" EntityType="Self.EquipmentUsage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventParticipants" EntityType="Self.EventParticipants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Horses" EntityType="Self.Horses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LessonParticipants" EntityType="Self.LessonParticipants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lessons" EntityType="Self.Lessons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rentals" EntityType="Self.Rentals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StaffSchedule" EntityType="Self.StaffSchedule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Availabil__metri__534D60F1" Association="Self.FK__Availabil__metri__534D60F1">
-            <End Role="SREMetrics" EntitySet="SREMetrics" />
-            <End Role="AvailabilityMetrics" EntitySet="AvailabilityMetrics" />
+          <EntitySet Name="VetVisits" EntityType="Self.VetVisits" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Equipment__Equip__440B1D61" Association="Self.FK__Equipment__Equip__440B1D61">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="EquipmentUsage" EntitySet="EquipmentUsage" />
           </AssociationSet>
-          <AssociationSet Name="FK__Companies__count__30F848ED" Association="Self.FK__Companies__count__30F848ED">
-            <End Role="Countries" EntitySet="Countries" />
-            <End Role="Companies" EntitySet="Companies" />
+          <AssociationSet Name="FK__Equipment__Lesso__44FF419A" Association="Self.FK__Equipment__Lesso__44FF419A">
+            <End Role="Lessons" EntitySet="Lessons" />
+            <End Role="EquipmentUsage" EntitySet="EquipmentUsage" />
           </AssociationSet>
-          <AssociationSet Name="FK__ErrorRate__metri__5AEE82B9" Association="Self.FK__ErrorRate__metri__5AEE82B9">
-            <End Role="SREMetrics" EntitySet="SREMetrics" />
-            <End Role="ErrorRateMetrics" EntitySet="ErrorRateMetrics" />
+          <AssociationSet Name="FK__Equipment__Renta__45F365D3" Association="Self.FK__Equipment__Renta__45F365D3">
+            <End Role="Rentals" EntitySet="Rentals" />
+            <End Role="EquipmentUsage" EntitySet="EquipmentUsage" />
           </AssociationSet>
-          <AssociationSet Name="FK__Incidents__compa__3B75D760" Association="Self.FK__Incidents__compa__3B75D760">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="Incidents" EntitySet="Incidents" />
+          <AssociationSet Name="FK__EventPart__Clien__3F466844" Association="Self.FK__EventPart__Clien__3F466844">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="EventParticipants" EntitySet="EventParticipants" />
           </AssociationSet>
-          <AssociationSet Name="FK__IncidentT__incid__3E52440B" Association="Self.FK__IncidentT__incid__3E52440B">
-            <End Role="Incidents" EntitySet="Incidents" />
-            <End Role="IncidentToTypes" EntitySet="IncidentToTypes" />
+          <AssociationSet Name="FK__EventPart__Event__3E52440B" Association="Self.FK__EventPart__Event__3E52440B">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="EventParticipants" EntitySet="EventParticipants" />
           </AssociationSet>
-          <AssociationSet Name="FK__IncidentT__incid__4222D4EF" Association="Self.FK__IncidentT__incid__4222D4EF">
-            <End Role="Incidents" EntitySet="Incidents" />
-            <End Role="IncidentToRootCauses" EntitySet="IncidentToRootCauses" />
+          <AssociationSet Name="FK__LessonPar__Clien__2F10007B" Association="Self.FK__LessonPar__Clien__2F10007B">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="LessonParticipants" EntitySet="LessonParticipants" />
           </AssociationSet>
-          <AssociationSet Name="FK__IncidentT__root___4316F928" Association="Self.FK__IncidentT__root___4316F928">
-            <End Role="RootCauses" EntitySet="RootCauses" />
-            <End Role="IncidentToRootCauses" EntitySet="IncidentToRootCauses" />
+          <AssociationSet Name="FK__LessonPar__Lesso__2E1BDC42" Association="Self.FK__LessonPar__Lesso__2E1BDC42">
+            <End Role="Lessons" EntitySet="Lessons" />
+            <End Role="LessonParticipants" EntitySet="LessonParticipants" />
           </AssociationSet>
-          <AssociationSet Name="FK__IncidentT__type___3F466844" Association="Self.FK__IncidentT__type___3F466844">
-            <End Role="IncidentTypes" EntitySet="IncidentTypes" />
-            <End Role="IncidentToTypes" EntitySet="IncidentToTypes" />
+          <AssociationSet Name="FK__Lessons__HorseID__2B3F6F97" Association="Self.FK__Lessons__HorseID__2B3F6F97">
+            <End Role="Horses" EntitySet="Horses" />
+            <End Role="Lessons" EntitySet="Lessons" />
           </AssociationSet>
-          <AssociationSet Name="FK__News__incident_i__60A75C0F" Association="Self.FK__News__incident_i__60A75C0F">
-            <End Role="Incidents" EntitySet="Incidents" />
-            <End Role="News" EntitySet="News" />
+          <AssociationSet Name="FK__Lessons__StaffID__2A4B4B5E" Association="Self.FK__Lessons__StaffID__2A4B4B5E">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Lessons" EntitySet="Lessons" />
           </AssociationSet>
-          <AssociationSet Name="FK__Remediati__curre__4CA06362" Association="Self.FK__Remediati__curre__4CA06362">
-            <End Role="Currencies" EntitySet="Currencies" />
-            <End Role="RemediationActions" EntitySet="RemediationActions" />
+          <AssociationSet Name="FK__Payments__Client__31EC6D26" Association="Self.FK__Payments__Client__31EC6D26">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Payments" EntitySet="Payments" />
           </AssociationSet>
-          <AssociationSet Name="FK__Remediati__incid__4AB81AF0" Association="Self.FK__Remediati__incid__4AB81AF0">
-            <End Role="Incidents" EntitySet="Incidents" />
-            <End Role="RemediationActions" EntitySet="RemediationActions" />
+          <AssociationSet Name="FK__Rentals__ClientI__34C8D9D1" Association="Self.FK__Rentals__ClientI__34C8D9D1">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Rentals" EntitySet="Rentals" />
           </AssociationSet>
-          <AssociationSet Name="FK__Remediati__team___4BAC3F29" Association="Self.FK__Remediati__team___4BAC3F29">
-            <End Role="Teams" EntitySet="Teams" />
-            <End Role="RemediationActions" EntitySet="RemediationActions" />
+          <AssociationSet Name="FK__Rentals__HorseID__35BCFE0A" Association="Self.FK__Rentals__HorseID__35BCFE0A">
+            <End Role="Horses" EntitySet="Horses" />
+            <End Role="Rentals" EntitySet="Rentals" />
           </AssociationSet>
-          <AssociationSet Name="FK__ResponseT__metri__571DF1D5" Association="Self.FK__ResponseT__metri__571DF1D5">
-            <End Role="SREMetrics" EntitySet="SREMetrics" />
-            <End Role="ResponseTimeMetrics" EntitySet="ResponseTimeMetrics" />
+          <AssociationSet Name="FK__StaffSche__Staff__48CFD27E" Association="Self.FK__StaffSche__Staff__48CFD27E">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StaffSchedule" EntitySet="StaffSchedule" />
           </AssociationSet>
-          <AssociationSet Name="FK__RootCause__categ__38996AB5" Association="Self.FK__RootCause__categ__38996AB5">
-            <End Role="RootCauseCategories" EntitySet="RootCauseCategories" />
-            <End Role="RootCauses" EntitySet="RootCauses" />
+          <AssociationSet Name="FK__VetVisits__Horse__38996AB5" Association="Self.FK__VetVisits__Horse__38996AB5">
+            <End Role="Horses" EntitySet="Horses" />
+            <End Role="VetVisits" EntitySet="VetVisits" />
           </AssociationSet>
-          <AssociationSet Name="FK__SREMetric__compa__4F7CD00D" Association="Self.FK__SREMetric__compa__4F7CD00D">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="SREMetrics" EntitySet="SREMetrics" />
-          </AssociationSet>
-          <AssociationSet Name="FK__StocksDat__compa__5DCAEF64" Association="Self.FK__StocksDat__compa__5DCAEF64">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="StocksData" EntitySet="StocksData" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Teams__company_i__47DBAE45" Association="Self.FK__Teams__company_i__47DBAE45">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="Teams" EntitySet="Teams" />
+          <AssociationSet Name="FK__VetVisits__Staff__398D8EEE" Association="Self.FK__VetVisits__Staff__398D8EEE">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="VetVisits" EntitySet="VetVisits" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="k8sLoverModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AvailabilityMetrics">
+      <Schema Namespace="HorseClubDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clients">
           <Key>
-            <PropertyRef Name="metric_id" />
+            <PropertyRef Name="ClientID" />
           </Key>
-          <Property Name="metric_id" Type="Int32" Nullable="false" />
-          <Property Name="availability" Type="Decimal" Precision="5" Scale="2" />
-          <NavigationProperty Name="SREMetrics" Relationship="Self.FK__Availabil__metri__534D60F1" FromRole="AvailabilityMetrics" ToRole="SREMetrics" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="JoinDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK__Payments__Client__31EC6D26" FromRole="Clients" ToRole="Payments" />
+          <NavigationProperty Name="Rentals" Relationship="Self.FK__Rentals__ClientI__34C8D9D1" FromRole="Clients" ToRole="Rentals" />
+          <NavigationProperty Name="Events" Relationship="Self.EventParticipants" FromRole="Clients" ToRole="Events" />
+          <NavigationProperty Name="Lessons" Relationship="Self.LessonParticipants" FromRole="Clients" ToRole="Lessons" />
         </EntityType>
-        <EntityType Name="Companies">
+        <EntityType Name="Equipment">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="EquipmentID" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="industry" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="country_id" Type="Int32" />
-          <NavigationProperty Name="Countries" Relationship="Self.FK__Companies__count__30F848ED" FromRole="Companies" ToRole="Countries" />
-          <NavigationProperty Name="Incidents" Relationship="Self.FK__Incidents__compa__3B75D760" FromRole="Companies" ToRole="Incidents" />
-          <NavigationProperty Name="SREMetrics" Relationship="Self.FK__SREMetric__compa__4F7CD00D" FromRole="Companies" ToRole="SREMetrics" />
-          <NavigationProperty Name="StocksData" Relationship="Self.FK__StocksDat__compa__5DCAEF64" FromRole="Companies" ToRole="StocksData" />
-          <NavigationProperty Name="Teams" Relationship="Self.FK__Teams__company_i__47DBAE45" FromRole="Companies" ToRole="Teams" />
+          <Property Name="EquipmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Condition" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EquipmentUsage" Relationship="Self.FK__Equipment__Equip__440B1D61" FromRole="Equipment" ToRole="EquipmentUsage" />
         </EntityType>
-        <EntityType Name="Countries">
+        <EntityType Name="EquipmentUsage">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="UsageID" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Companies" Relationship="Self.FK__Companies__count__30F848ED" FromRole="Countries" ToRole="Companies" />
+          <Property Name="UsageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipmentID" Type="Int32" />
+          <Property Name="LessonID" Type="Int32" />
+          <Property Name="RentalID" Type="Int32" />
+          <Property Name="UsageDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK__Equipment__Equip__440B1D61" FromRole="EquipmentUsage" ToRole="Equipment" />
+          <NavigationProperty Name="Lessons" Relationship="Self.FK__Equipment__Lesso__44FF419A" FromRole="EquipmentUsage" ToRole="Lessons" />
+          <NavigationProperty Name="Rentals" Relationship="Self.FK__Equipment__Renta__45F365D3" FromRole="EquipmentUsage" ToRole="Rentals" />
         </EntityType>
-        <EntityType Name="Currencies">
+        <EntityType Name="Events">
           <Key>
-            <PropertyRef Name="code" />
+            <PropertyRef Name="EventID" />
           </Key>
-          <Property Name="code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="RemediationActions" Relationship="Self.FK__Remediati__curre__4CA06362" FromRole="Currencies" ToRole="RemediationActions" />
+          <Property Name="EventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EventDate" Type="DateTime" Precision="0" />
+          <Property Name="EventTime" Type="Time" Precision="7" />
+          <NavigationProperty Name="Clients" Relationship="Self.EventParticipants" FromRole="Events" ToRole="Clients" />
         </EntityType>
-        <EntityType Name="ErrorRateMetrics">
+        <EntityType Name="Horses">
           <Key>
-            <PropertyRef Name="metric_id" />
+            <PropertyRef Name="HorseID" />
           </Key>
-          <Property Name="metric_id" Type="Int32" Nullable="false" />
-          <Property Name="error_rate" Type="Decimal" Precision="5" Scale="2" />
-          <NavigationProperty Name="SREMetrics" Relationship="Self.FK__ErrorRate__metri__5AEE82B9" FromRole="ErrorRateMetrics" ToRole="SREMetrics" />
+          <Property Name="HorseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Breed" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BirthYear" Type="Int32" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Lessons" Relationship="Self.FK__Lessons__HorseID__2B3F6F97" FromRole="Horses" ToRole="Lessons" />
+          <NavigationProperty Name="Rentals" Relationship="Self.FK__Rentals__HorseID__35BCFE0A" FromRole="Horses" ToRole="Rentals" />
+          <NavigationProperty Name="VetVisits" Relationship="Self.FK__VetVisits__Horse__38996AB5" FromRole="Horses" ToRole="VetVisits" />
         </EntityType>
-        <EntityType Name="Incidents">
+        <EntityType Name="Lessons">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="LessonID" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="company_id" Type="Int32" />
-          <Property Name="start_time" Type="DateTimeOffset" Precision="7" />
-          <Property Name="end_time" Type="DateTimeOffset" Precision="7" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Companies" Relationship="Self.FK__Incidents__compa__3B75D760" FromRole="Incidents" ToRole="Companies" />
-          <NavigationProperty Name="News" Relationship="Self.FK__News__incident_i__60A75C0F" FromRole="Incidents" ToRole="News" />
-          <NavigationProperty Name="RemediationActions" Relationship="Self.FK__Remediati__incid__4AB81AF0" FromRole="Incidents" ToRole="RemediationActions" />
-          <NavigationProperty Name="RootCauses" Relationship="Self.IncidentToRootCauses" FromRole="Incidents" ToRole="RootCauses" />
-          <NavigationProperty Name="IncidentTypes" Relationship="Self.IncidentToTypes" FromRole="Incidents" ToRole="IncidentTypes" />
+          <Property Name="LessonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LessonDate" Type="DateTime" Precision="0" />
+          <Property Name="LessonTime" Type="Time" Precision="7" />
+          <Property Name="StaffID" Type="Int32" />
+          <Property Name="HorseID" Type="Int32" />
+          <NavigationProperty Name="EquipmentUsage" Relationship="Self.FK__Equipment__Lesso__44FF419A" FromRole="Lessons" ToRole="EquipmentUsage" />
+          <NavigationProperty Name="Horses" Relationship="Self.FK__Lessons__HorseID__2B3F6F97" FromRole="Lessons" ToRole="Horses" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK__Lessons__StaffID__2A4B4B5E" FromRole="Lessons" ToRole="Staff" />
+          <NavigationProperty Name="Clients" Relationship="Self.LessonParticipants" FromRole="Lessons" ToRole="Clients" />
         </EntityType>
-        <EntityType Name="IncidentTypes">
+        <EntityType Name="Payments">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="PaymentID" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="impact_level" Type="Int32" />
-          <Property Name="recovery_time_goal_minutes" Type="Int32" />
-          <NavigationProperty Name="Incidents" Relationship="Self.IncidentToTypes" FromRole="IncidentTypes" ToRole="Incidents" />
+          <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="ServiceType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__Payments__Client__31EC6D26" FromRole="Payments" ToRole="Clients" />
         </EntityType>
-        <EntityType Name="News">
+        <EntityType Name="Rentals">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="RentalID" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="incident_id" Type="Int32" />
-          <Property Name="published_at" Type="DateTimeOffset" Precision="7" />
-          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="source" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="popularity" Type="Int32" />
-          <Property Name="sentiment_score" Type="Int32" />
-          <NavigationProperty Name="Incidents" Relationship="Self.FK__News__incident_i__60A75C0F" FromRole="News" ToRole="Incidents" />
+          <Property Name="RentalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RentalDate" Type="DateTime" Precision="0" />
+          <Property Name="RentalTime" Type="Time" Precision="7" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="HorseID" Type="Int32" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__Rentals__ClientI__34C8D9D1" FromRole="Rentals" ToRole="Clients" />
+          <NavigationProperty Name="EquipmentUsage" Relationship="Self.FK__Equipment__Renta__45F365D3" FromRole="Rentals" ToRole="EquipmentUsage" />
+          <NavigationProperty Name="Horses" Relationship="Self.FK__Rentals__HorseID__35BCFE0A" FromRole="Rentals" ToRole="Horses" />
         </EntityType>
-        <EntityType Name="RemediationActions">
+        <EntityType Name="Staff">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="StaffID" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="incident_id" Type="Int32" />
-          <Property Name="team_id" Type="Int32" />
-          <Property Name="action_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="loss" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="currency_code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Currencies" Relationship="Self.FK__Remediati__curre__4CA06362" FromRole="RemediationActions" ToRole="Currencies" />
-          <NavigationProperty Name="Incidents" Relationship="Self.FK__Remediati__incid__4AB81AF0" FromRole="RemediationActions" ToRole="Incidents" />
-          <NavigationProperty Name="Teams" Relationship="Self.FK__Remediati__team___4BAC3F29" FromRole="RemediationActions" ToRole="Teams" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="HireDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Lessons" Relationship="Self.FK__Lessons__StaffID__2A4B4B5E" FromRole="Staff" ToRole="Lessons" />
+          <NavigationProperty Name="StaffSchedule" Relationship="Self.FK__StaffSche__Staff__48CFD27E" FromRole="Staff" ToRole="StaffSchedule" />
+          <NavigationProperty Name="VetVisits" Relationship="Self.FK__VetVisits__Staff__398D8EEE" FromRole="Staff" ToRole="VetVisits" />
         </EntityType>
-        <EntityType Name="ResponseTimeMetrics">
+        <EntityType Name="StaffSchedule">
           <Key>
-            <PropertyRef Name="metric_id" />
+            <PropertyRef Name="ScheduleID" />
           </Key>
-          <Property Name="metric_id" Type="Int32" Nullable="false" />
-          <Property Name="avg_response_time" Type="Decimal" Precision="18" Scale="0" />
-          <NavigationProperty Name="SREMetrics" Relationship="Self.FK__ResponseT__metri__571DF1D5" FromRole="ResponseTimeMetrics" ToRole="SREMetrics" />
-        </EntityType>
-        <EntityType Name="RootCauseCategories">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="RootCauses" Relationship="Self.FK__RootCause__categ__38996AB5" FromRole="RootCauseCategories" ToRole="RootCauses" />
-        </EntityType>
-        <EntityType Name="RootCauses">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="category_id" Type="Int32" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="RootCauseCategories" Relationship="Self.FK__RootCause__categ__38996AB5" FromRole="RootCauses" ToRole="RootCauseCategories" />
-          <NavigationProperty Name="Incidents" Relationship="Self.IncidentToRootCauses" FromRole="RootCauses" ToRole="Incidents" />
-        </EntityType>
-        <EntityType Name="SREMetrics">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="company_id" Type="Int32" />
-          <Property Name="timestamp" Type="DateTimeOffset" Precision="7" />
-          <NavigationProperty Name="AvailabilityMetrics" Relationship="Self.FK__Availabil__metri__534D60F1" FromRole="SREMetrics" ToRole="AvailabilityMetrics" />
-          <NavigationProperty Name="Companies" Relationship="Self.FK__SREMetric__compa__4F7CD00D" FromRole="SREMetrics" ToRole="Companies" />
-          <NavigationProperty Name="ErrorRateMetrics" Relationship="Self.FK__ErrorRate__metri__5AEE82B9" FromRole="SREMetrics" ToRole="ErrorRateMetrics" />
-          <NavigationProperty Name="ResponseTimeMetrics" Relationship="Self.FK__ResponseT__metri__571DF1D5" FromRole="SREMetrics" ToRole="ResponseTimeMetrics" />
-        </EntityType>
-        <EntityType Name="StocksData">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="company_id" Type="Int32" />
-          <Property Name="timestamp" Type="DateTimeOffset" Precision="7" />
-          <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="volume" Type="Int32" />
-          <NavigationProperty Name="Companies" Relationship="Self.FK__StocksDat__compa__5DCAEF64" FromRole="StocksData" ToRole="Companies" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="Teams">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="company_id" Type="Int32" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="specialization" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Companies" Relationship="Self.FK__Teams__company_i__47DBAE45" FromRole="Teams" ToRole="Companies" />
-          <NavigationProperty Name="RemediationActions" Relationship="Self.FK__Remediati__team___4BAC3F29" FromRole="Teams" ToRole="RemediationActions" />
+          <Property Name="ScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StaffID" Type="Int32" />
+          <Property Name="WorkDate" Type="DateTime" Precision="0" />
+          <Property Name="StartTime" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK__StaffSche__Staff__48CFD27E" FromRole="StaffSchedule" ToRole="Staff" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="login" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Availabil__metri__534D60F1">
-          <End Role="SREMetrics" Type="Self.SREMetrics" Multiplicity="1" />
-          <End Role="AvailabilityMetrics" Type="Self.AvailabilityMetrics" Multiplicity="0..1" />
+        <EntityType Name="VetVisits">
+          <Key>
+            <PropertyRef Name="VisitID" />
+          </Key>
+          <Property Name="VisitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HorseID" Type="Int32" />
+          <Property Name="StaffID" Type="Int32" />
+          <Property Name="VisitDate" Type="DateTime" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Horses" Relationship="Self.FK__VetVisits__Horse__38996AB5" FromRole="VetVisits" ToRole="Horses" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK__VetVisits__Staff__398D8EEE" FromRole="VetVisits" ToRole="Staff" />
+        </EntityType>
+        <Association Name="FK__Payments__Client__31EC6D26">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SREMetrics">
-              <PropertyRef Name="id" />
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
             </Principal>
-            <Dependent Role="AvailabilityMetrics">
-              <PropertyRef Name="metric_id" />
+            <Dependent Role="Payments">
+              <PropertyRef Name="ClientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Companies__count__30F848ED">
-          <End Role="Countries" Type="Self.Countries" Multiplicity="0..1" />
-          <End Role="Companies" Type="Self.Companies" Multiplicity="*" />
+        <Association Name="FK__Rentals__ClientI__34C8D9D1">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Countries">
-              <PropertyRef Name="id" />
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
             </Principal>
-            <Dependent Role="Companies">
-              <PropertyRef Name="country_id" />
+            <Dependent Role="Rentals">
+              <PropertyRef Name="ClientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Incidents__compa__3B75D760">
-          <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
-          <End Role="Incidents" Type="Self.Incidents" Multiplicity="*" />
+        <Association Name="FK__Equipment__Equip__440B1D61">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="EquipmentUsage" Type="Self.EquipmentUsage" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Companies">
-              <PropertyRef Name="id" />
+            <Principal Role="Equipment">
+              <PropertyRef Name="EquipmentID" />
             </Principal>
-            <Dependent Role="Incidents">
-              <PropertyRef Name="company_id" />
+            <Dependent Role="EquipmentUsage">
+              <PropertyRef Name="EquipmentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SREMetric__compa__4F7CD00D">
-          <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
-          <End Role="SREMetrics" Type="Self.SREMetrics" Multiplicity="*" />
+        <Association Name="FK__Equipment__Lesso__44FF419A">
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="0..1" />
+          <End Role="EquipmentUsage" Type="Self.EquipmentUsage" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Companies">
-              <PropertyRef Name="id" />
+            <Principal Role="Lessons">
+              <PropertyRef Name="LessonID" />
             </Principal>
-            <Dependent Role="SREMetrics">
-              <PropertyRef Name="company_id" />
+            <Dependent Role="EquipmentUsage">
+              <PropertyRef Name="LessonID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__StocksDat__compa__5DCAEF64">
-          <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
-          <End Role="StocksData" Type="Self.StocksData" Multiplicity="*" />
+        <Association Name="FK__Equipment__Renta__45F365D3">
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="0..1" />
+          <End Role="EquipmentUsage" Type="Self.EquipmentUsage" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Companies">
-              <PropertyRef Name="id" />
+            <Principal Role="Rentals">
+              <PropertyRef Name="RentalID" />
             </Principal>
-            <Dependent Role="StocksData">
-              <PropertyRef Name="company_id" />
+            <Dependent Role="EquipmentUsage">
+              <PropertyRef Name="RentalID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Teams__company_i__47DBAE45">
-          <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
-          <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
+        <Association Name="FK__Lessons__HorseID__2B3F6F97">
+          <End Role="Horses" Type="Self.Horses" Multiplicity="0..1" />
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Companies">
-              <PropertyRef Name="id" />
+            <Principal Role="Horses">
+              <PropertyRef Name="HorseID" />
             </Principal>
-            <Dependent Role="Teams">
-              <PropertyRef Name="company_id" />
+            <Dependent Role="Lessons">
+              <PropertyRef Name="HorseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Remediati__curre__4CA06362">
-          <End Role="Currencies" Type="Self.Currencies" Multiplicity="0..1" />
-          <End Role="RemediationActions" Type="Self.RemediationActions" Multiplicity="*" />
+        <Association Name="FK__Rentals__HorseID__35BCFE0A">
+          <End Role="Horses" Type="Self.Horses" Multiplicity="0..1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Currencies">
-              <PropertyRef Name="code" />
+            <Principal Role="Horses">
+              <PropertyRef Name="HorseID" />
             </Principal>
-            <Dependent Role="RemediationActions">
-              <PropertyRef Name="currency_code" />
+            <Dependent Role="Rentals">
+              <PropertyRef Name="HorseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ErrorRate__metri__5AEE82B9">
-          <End Role="SREMetrics" Type="Self.SREMetrics" Multiplicity="1" />
-          <End Role="ErrorRateMetrics" Type="Self.ErrorRateMetrics" Multiplicity="0..1" />
+        <Association Name="FK__VetVisits__Horse__38996AB5">
+          <End Role="Horses" Type="Self.Horses" Multiplicity="0..1" />
+          <End Role="VetVisits" Type="Self.VetVisits" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SREMetrics">
-              <PropertyRef Name="id" />
+            <Principal Role="Horses">
+              <PropertyRef Name="HorseID" />
             </Principal>
-            <Dependent Role="ErrorRateMetrics">
-              <PropertyRef Name="metric_id" />
+            <Dependent Role="VetVisits">
+              <PropertyRef Name="HorseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__News__incident_i__60A75C0F">
-          <End Role="Incidents" Type="Self.Incidents" Multiplicity="0..1" />
-          <End Role="News" Type="Self.News" Multiplicity="*" />
+        <Association Name="FK__Lessons__StaffID__2A4B4B5E">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Incidents">
-              <PropertyRef Name="id" />
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
             </Principal>
-            <Dependent Role="News">
-              <PropertyRef Name="incident_id" />
+            <Dependent Role="Lessons">
+              <PropertyRef Name="StaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Remediati__incid__4AB81AF0">
-          <End Role="Incidents" Type="Self.Incidents" Multiplicity="0..1" />
-          <End Role="RemediationActions" Type="Self.RemediationActions" Multiplicity="*" />
+        <Association Name="FK__StaffSche__Staff__48CFD27E">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="StaffSchedule" Type="Self.StaffSchedule" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Incidents">
-              <PropertyRef Name="id" />
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
             </Principal>
-            <Dependent Role="RemediationActions">
-              <PropertyRef Name="incident_id" />
+            <Dependent Role="StaffSchedule">
+              <PropertyRef Name="StaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Remediati__team___4BAC3F29">
-          <End Role="Teams" Type="Self.Teams" Multiplicity="0..1" />
-          <End Role="RemediationActions" Type="Self.RemediationActions" Multiplicity="*" />
+        <Association Name="FK__VetVisits__Staff__398D8EEE">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="VetVisits" Type="Self.VetVisits" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Teams">
-              <PropertyRef Name="id" />
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
             </Principal>
-            <Dependent Role="RemediationActions">
-              <PropertyRef Name="team_id" />
+            <Dependent Role="VetVisits">
+              <PropertyRef Name="StaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ResponseT__metri__571DF1D5">
-          <End Role="SREMetrics" Type="Self.SREMetrics" Multiplicity="1" />
-          <End Role="ResponseTimeMetrics" Type="Self.ResponseTimeMetrics" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="SREMetrics">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ResponseTimeMetrics">
-              <PropertyRef Name="metric_id" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="EventParticipants">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
         </Association>
-        <Association Name="FK__RootCause__categ__38996AB5">
-          <End Role="RootCauseCategories" Type="Self.RootCauseCategories" Multiplicity="0..1" />
-          <End Role="RootCauses" Type="Self.RootCauses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RootCauseCategories">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RootCauses">
-              <PropertyRef Name="category_id" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="LessonParticipants">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <End Role="Lessons" Type="Self.Lessons" Multiplicity="*" />
         </Association>
-        <Association Name="IncidentToRootCauses">
-          <End Role="Incidents" Type="Self.Incidents" Multiplicity="*" />
-          <End Role="RootCauses" Type="Self.RootCauses" Multiplicity="*" />
-        </Association>
-        <Association Name="IncidentToTypes">
-          <End Role="Incidents" Type="Self.Incidents" Multiplicity="*" />
-          <End Role="IncidentTypes" Type="Self.IncidentTypes" Multiplicity="*" />
-        </Association>
-        <EntityContainer Name="k8sLoverEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AvailabilityMetrics" EntityType="Self.AvailabilityMetrics" />
-          <EntitySet Name="Companies" EntityType="Self.Companies" />
-          <EntitySet Name="Countries" EntityType="Self.Countries" />
-          <EntitySet Name="Currencies" EntityType="Self.Currencies" />
-          <EntitySet Name="ErrorRateMetrics" EntityType="Self.ErrorRateMetrics" />
-          <EntitySet Name="Incidents" EntityType="Self.Incidents" />
-          <EntitySet Name="IncidentTypes" EntityType="Self.IncidentTypes" />
-          <EntitySet Name="News" EntityType="Self.News" />
-          <EntitySet Name="RemediationActions" EntityType="Self.RemediationActions" />
-          <EntitySet Name="ResponseTimeMetrics" EntityType="Self.ResponseTimeMetrics" />
-          <EntitySet Name="RootCauseCategories" EntityType="Self.RootCauseCategories" />
-          <EntitySet Name="RootCauses" EntityType="Self.RootCauses" />
-          <EntitySet Name="SREMetrics" EntityType="Self.SREMetrics" />
-          <EntitySet Name="StocksData" EntityType="Self.StocksData" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="Teams" EntityType="Self.Teams" />
+        <EntityContainer Name="HorseClubDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Equipment" EntityType="Self.Equipment" />
+          <EntitySet Name="EquipmentUsage" EntityType="Self.EquipmentUsage" />
+          <EntitySet Name="Events" EntityType="Self.Events" />
+          <EntitySet Name="Horses" EntityType="Self.Horses" />
+          <EntitySet Name="Lessons" EntityType="Self.Lessons" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" />
+          <EntitySet Name="Rentals" EntityType="Self.Rentals" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" />
+          <EntitySet Name="StaffSchedule" EntityType="Self.StaffSchedule" />
           <EntitySet Name="Users" EntityType="Self.Users" />
-          <AssociationSet Name="FK__Availabil__metri__534D60F1" Association="Self.FK__Availabil__metri__534D60F1">
-            <End Role="SREMetrics" EntitySet="SREMetrics" />
-            <End Role="AvailabilityMetrics" EntitySet="AvailabilityMetrics" />
+          <EntitySet Name="VetVisits" EntityType="Self.VetVisits" />
+          <AssociationSet Name="FK__Payments__Client__31EC6D26" Association="Self.FK__Payments__Client__31EC6D26">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Payments" EntitySet="Payments" />
           </AssociationSet>
-          <AssociationSet Name="FK__Companies__count__30F848ED" Association="Self.FK__Companies__count__30F848ED">
-            <End Role="Countries" EntitySet="Countries" />
-            <End Role="Companies" EntitySet="Companies" />
+          <AssociationSet Name="FK__Rentals__ClientI__34C8D9D1" Association="Self.FK__Rentals__ClientI__34C8D9D1">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Rentals" EntitySet="Rentals" />
           </AssociationSet>
-          <AssociationSet Name="FK__Incidents__compa__3B75D760" Association="Self.FK__Incidents__compa__3B75D760">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="Incidents" EntitySet="Incidents" />
+          <AssociationSet Name="FK__Equipment__Equip__440B1D61" Association="Self.FK__Equipment__Equip__440B1D61">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="EquipmentUsage" EntitySet="EquipmentUsage" />
           </AssociationSet>
-          <AssociationSet Name="FK__SREMetric__compa__4F7CD00D" Association="Self.FK__SREMetric__compa__4F7CD00D">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="SREMetrics" EntitySet="SREMetrics" />
+          <AssociationSet Name="FK__Equipment__Lesso__44FF419A" Association="Self.FK__Equipment__Lesso__44FF419A">
+            <End Role="Lessons" EntitySet="Lessons" />
+            <End Role="EquipmentUsage" EntitySet="EquipmentUsage" />
           </AssociationSet>
-          <AssociationSet Name="FK__StocksDat__compa__5DCAEF64" Association="Self.FK__StocksDat__compa__5DCAEF64">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="StocksData" EntitySet="StocksData" />
+          <AssociationSet Name="FK__Equipment__Renta__45F365D3" Association="Self.FK__Equipment__Renta__45F365D3">
+            <End Role="Rentals" EntitySet="Rentals" />
+            <End Role="EquipmentUsage" EntitySet="EquipmentUsage" />
           </AssociationSet>
-          <AssociationSet Name="FK__Teams__company_i__47DBAE45" Association="Self.FK__Teams__company_i__47DBAE45">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="Teams" EntitySet="Teams" />
+          <AssociationSet Name="FK__Lessons__HorseID__2B3F6F97" Association="Self.FK__Lessons__HorseID__2B3F6F97">
+            <End Role="Horses" EntitySet="Horses" />
+            <End Role="Lessons" EntitySet="Lessons" />
           </AssociationSet>
-          <AssociationSet Name="FK__Remediati__curre__4CA06362" Association="Self.FK__Remediati__curre__4CA06362">
-            <End Role="Currencies" EntitySet="Currencies" />
-            <End Role="RemediationActions" EntitySet="RemediationActions" />
+          <AssociationSet Name="FK__Rentals__HorseID__35BCFE0A" Association="Self.FK__Rentals__HorseID__35BCFE0A">
+            <End Role="Horses" EntitySet="Horses" />
+            <End Role="Rentals" EntitySet="Rentals" />
           </AssociationSet>
-          <AssociationSet Name="FK__ErrorRate__metri__5AEE82B9" Association="Self.FK__ErrorRate__metri__5AEE82B9">
-            <End Role="SREMetrics" EntitySet="SREMetrics" />
-            <End Role="ErrorRateMetrics" EntitySet="ErrorRateMetrics" />
+          <AssociationSet Name="FK__VetVisits__Horse__38996AB5" Association="Self.FK__VetVisits__Horse__38996AB5">
+            <End Role="Horses" EntitySet="Horses" />
+            <End Role="VetVisits" EntitySet="VetVisits" />
           </AssociationSet>
-          <AssociationSet Name="FK__News__incident_i__60A75C0F" Association="Self.FK__News__incident_i__60A75C0F">
-            <End Role="Incidents" EntitySet="Incidents" />
-            <End Role="News" EntitySet="News" />
+          <AssociationSet Name="FK__Lessons__StaffID__2A4B4B5E" Association="Self.FK__Lessons__StaffID__2A4B4B5E">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Lessons" EntitySet="Lessons" />
           </AssociationSet>
-          <AssociationSet Name="FK__Remediati__incid__4AB81AF0" Association="Self.FK__Remediati__incid__4AB81AF0">
-            <End Role="Incidents" EntitySet="Incidents" />
-            <End Role="RemediationActions" EntitySet="RemediationActions" />
+          <AssociationSet Name="FK__StaffSche__Staff__48CFD27E" Association="Self.FK__StaffSche__Staff__48CFD27E">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StaffSchedule" EntitySet="StaffSchedule" />
           </AssociationSet>
-          <AssociationSet Name="FK__Remediati__team___4BAC3F29" Association="Self.FK__Remediati__team___4BAC3F29">
-            <End Role="Teams" EntitySet="Teams" />
-            <End Role="RemediationActions" EntitySet="RemediationActions" />
+          <AssociationSet Name="FK__VetVisits__Staff__398D8EEE" Association="Self.FK__VetVisits__Staff__398D8EEE">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="VetVisits" EntitySet="VetVisits" />
           </AssociationSet>
-          <AssociationSet Name="FK__ResponseT__metri__571DF1D5" Association="Self.FK__ResponseT__metri__571DF1D5">
-            <End Role="SREMetrics" EntitySet="SREMetrics" />
-            <End Role="ResponseTimeMetrics" EntitySet="ResponseTimeMetrics" />
+          <AssociationSet Name="EventParticipants" Association="Self.EventParticipants">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Events" EntitySet="Events" />
           </AssociationSet>
-          <AssociationSet Name="FK__RootCause__categ__38996AB5" Association="Self.FK__RootCause__categ__38996AB5">
-            <End Role="RootCauseCategories" EntitySet="RootCauseCategories" />
-            <End Role="RootCauses" EntitySet="RootCauses" />
-          </AssociationSet>
-          <AssociationSet Name="IncidentToRootCauses" Association="Self.IncidentToRootCauses">
-            <End Role="Incidents" EntitySet="Incidents" />
-            <End Role="RootCauses" EntitySet="RootCauses" />
-          </AssociationSet>
-          <AssociationSet Name="IncidentToTypes" Association="Self.IncidentToTypes">
-            <End Role="Incidents" EntitySet="Incidents" />
-            <End Role="IncidentTypes" EntitySet="IncidentTypes" />
+          <AssociationSet Name="LessonParticipants" Association="Self.LessonParticipants">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Lessons" EntitySet="Lessons" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -899,189 +761,154 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="k8sLoverModelStoreContainer" CdmEntityContainer="k8sLoverEntities">
-          <EntitySetMapping Name="AvailabilityMetrics">
-            <EntityTypeMapping TypeName="k8sLoverModel.AvailabilityMetrics">
-              <MappingFragment StoreEntitySet="AvailabilityMetrics">
-                <ScalarProperty Name="metric_id" ColumnName="metric_id" />
-                <ScalarProperty Name="availability" ColumnName="availability" />
+        <EntityContainerMapping StorageEntityContainer="HorseClubDBModelStoreContainer" CdmEntityContainer="HorseClubDBEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="HorseClubDBModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Companies">
-            <EntityTypeMapping TypeName="k8sLoverModel.Companies">
-              <MappingFragment StoreEntitySet="Companies">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="industry" ColumnName="industry" />
-                <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <EntitySetMapping Name="Equipment">
+            <EntityTypeMapping TypeName="HorseClubDBModel.Equipment">
+              <MappingFragment StoreEntitySet="Equipment">
+                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Countries">
-            <EntityTypeMapping TypeName="k8sLoverModel.Countries">
-              <MappingFragment StoreEntitySet="Countries">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+          <EntitySetMapping Name="EquipmentUsage">
+            <EntityTypeMapping TypeName="HorseClubDBModel.EquipmentUsage">
+              <MappingFragment StoreEntitySet="EquipmentUsage">
+                <ScalarProperty Name="UsageID" ColumnName="UsageID" />
+                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+                <ScalarProperty Name="LessonID" ColumnName="LessonID" />
+                <ScalarProperty Name="RentalID" ColumnName="RentalID" />
+                <ScalarProperty Name="UsageDate" ColumnName="UsageDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Currencies">
-            <EntityTypeMapping TypeName="k8sLoverModel.Currencies">
-              <MappingFragment StoreEntitySet="Currencies">
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="name" ColumnName="name" />
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="HorseClubDBModel.Events">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventName" ColumnName="EventName" />
+                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                <ScalarProperty Name="EventTime" ColumnName="EventTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ErrorRateMetrics">
-            <EntityTypeMapping TypeName="k8sLoverModel.ErrorRateMetrics">
-              <MappingFragment StoreEntitySet="ErrorRateMetrics">
-                <ScalarProperty Name="metric_id" ColumnName="metric_id" />
-                <ScalarProperty Name="error_rate" ColumnName="error_rate" />
+          <EntitySetMapping Name="Horses">
+            <EntityTypeMapping TypeName="HorseClubDBModel.Horses">
+              <MappingFragment StoreEntitySet="Horses">
+                <ScalarProperty Name="HorseID" ColumnName="HorseID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Breed" ColumnName="Breed" />
+                <ScalarProperty Name="BirthYear" ColumnName="BirthYear" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Incidents">
-            <EntityTypeMapping TypeName="k8sLoverModel.Incidents">
-              <MappingFragment StoreEntitySet="Incidents">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="company_id" ColumnName="company_id" />
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
-                <ScalarProperty Name="end_time" ColumnName="end_time" />
-                <ScalarProperty Name="description" ColumnName="description" />
+          <EntitySetMapping Name="Lessons">
+            <EntityTypeMapping TypeName="HorseClubDBModel.Lessons">
+              <MappingFragment StoreEntitySet="Lessons">
+                <ScalarProperty Name="LessonID" ColumnName="LessonID" />
+                <ScalarProperty Name="LessonDate" ColumnName="LessonDate" />
+                <ScalarProperty Name="LessonTime" ColumnName="LessonTime" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="HorseID" ColumnName="HorseID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IncidentTypes">
-            <EntityTypeMapping TypeName="k8sLoverModel.IncidentTypes">
-              <MappingFragment StoreEntitySet="IncidentTypes">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="impact_level" ColumnName="impact_level" />
-                <ScalarProperty Name="recovery_time_goal_minutes" ColumnName="recovery_time_goal_minutes" />
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="HorseClubDBModel.Payments">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="News">
-            <EntityTypeMapping TypeName="k8sLoverModel.News">
-              <MappingFragment StoreEntitySet="News">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="incident_id" ColumnName="incident_id" />
-                <ScalarProperty Name="published_at" ColumnName="published_at" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="source" ColumnName="source" />
-                <ScalarProperty Name="popularity" ColumnName="popularity" />
-                <ScalarProperty Name="sentiment_score" ColumnName="sentiment_score" />
+          <EntitySetMapping Name="Rentals">
+            <EntityTypeMapping TypeName="HorseClubDBModel.Rentals">
+              <MappingFragment StoreEntitySet="Rentals">
+                <ScalarProperty Name="RentalID" ColumnName="RentalID" />
+                <ScalarProperty Name="RentalDate" ColumnName="RentalDate" />
+                <ScalarProperty Name="RentalTime" ColumnName="RentalTime" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="HorseID" ColumnName="HorseID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RemediationActions">
-            <EntityTypeMapping TypeName="k8sLoverModel.RemediationActions">
-              <MappingFragment StoreEntitySet="RemediationActions">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="incident_id" ColumnName="incident_id" />
-                <ScalarProperty Name="team_id" ColumnName="team_id" />
-                <ScalarProperty Name="action_description" ColumnName="action_description" />
-                <ScalarProperty Name="loss" ColumnName="loss" />
-                <ScalarProperty Name="currency_code" ColumnName="currency_code" />
+          <EntitySetMapping Name="Staff">
+            <EntityTypeMapping TypeName="HorseClubDBModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ResponseTimeMetrics">
-            <EntityTypeMapping TypeName="k8sLoverModel.ResponseTimeMetrics">
-              <MappingFragment StoreEntitySet="ResponseTimeMetrics">
-                <ScalarProperty Name="metric_id" ColumnName="metric_id" />
-                <ScalarProperty Name="avg_response_time" ColumnName="avg_response_time" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RootCauseCategories">
-            <EntityTypeMapping TypeName="k8sLoverModel.RootCauseCategories">
-              <MappingFragment StoreEntitySet="RootCauseCategories">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RootCauses">
-            <EntityTypeMapping TypeName="k8sLoverModel.RootCauses">
-              <MappingFragment StoreEntitySet="RootCauses">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="description" ColumnName="description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SREMetrics">
-            <EntityTypeMapping TypeName="k8sLoverModel.SREMetrics">
-              <MappingFragment StoreEntitySet="SREMetrics">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="company_id" ColumnName="company_id" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StocksData">
-            <EntityTypeMapping TypeName="k8sLoverModel.StocksData">
-              <MappingFragment StoreEntitySet="StocksData">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="company_id" ColumnName="company_id" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="volume" ColumnName="volume" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="k8sLoverModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Teams">
-            <EntityTypeMapping TypeName="k8sLoverModel.Teams">
-              <MappingFragment StoreEntitySet="Teams">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="company_id" ColumnName="company_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="specialization" ColumnName="specialization" />
+          <EntitySetMapping Name="StaffSchedule">
+            <EntityTypeMapping TypeName="HorseClubDBModel.StaffSchedule">
+              <MappingFragment StoreEntitySet="StaffSchedule">
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="WorkDate" ColumnName="WorkDate" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="k8sLoverModel.Users">
+            <EntityTypeMapping TypeName="HorseClubDBModel.Users">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="last_name" ColumnName="last_name" />
-                <ScalarProperty Name="login" ColumnName="login" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="IncidentToRootCauses" TypeName="k8sLoverModel.IncidentToRootCauses" StoreEntitySet="IncidentToRootCauses">
-            <EndProperty Name="Incidents">
-              <ScalarProperty Name="id" ColumnName="incident_id" />
+          <EntitySetMapping Name="VetVisits">
+            <EntityTypeMapping TypeName="HorseClubDBModel.VetVisits">
+              <MappingFragment StoreEntitySet="VetVisits">
+                <ScalarProperty Name="VisitID" ColumnName="VisitID" />
+                <ScalarProperty Name="HorseID" ColumnName="HorseID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="VisitDate" ColumnName="VisitDate" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EventParticipants" TypeName="HorseClubDBModel.EventParticipants" StoreEntitySet="EventParticipants">
+            <EndProperty Name="Clients">
+              <ScalarProperty Name="ClientID" ColumnName="ClientID" />
             </EndProperty>
-            <EndProperty Name="RootCauses">
-              <ScalarProperty Name="id" ColumnName="root_cause_id" />
+            <EndProperty Name="Events">
+              <ScalarProperty Name="EventID" ColumnName="EventID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="IncidentToTypes" TypeName="k8sLoverModel.IncidentToTypes" StoreEntitySet="IncidentToTypes">
-            <EndProperty Name="Incidents">
-              <ScalarProperty Name="id" ColumnName="incident_id" />
+          <AssociationSetMapping Name="LessonParticipants" TypeName="HorseClubDBModel.LessonParticipants" StoreEntitySet="LessonParticipants">
+            <EndProperty Name="Clients">
+              <ScalarProperty Name="ClientID" ColumnName="ClientID" />
             </EndProperty>
-            <EndProperty Name="IncidentTypes">
-              <ScalarProperty Name="id" ColumnName="type_id" />
+            <EndProperty Name="Lessons">
+              <ScalarProperty Name="LessonID" ColumnName="LessonID" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

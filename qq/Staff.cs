@@ -12,30 +12,28 @@ namespace qq
     using System;
     using System.Collections.Generic;
     
-    public partial class Companies
+    public partial class Staff
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Companies()
+        public Staff()
         {
-            this.Incidents = new HashSet<Incidents>();
-            this.SREMetrics = new HashSet<SREMetrics>();
-            this.StocksData = new HashSet<StocksData>();
-            this.Teams = new HashSet<Teams>();
+            this.Lessons = new HashSet<Lessons>();
+            this.StaffSchedule = new HashSet<StaffSchedule>();
+            this.VetVisits = new HashSet<VetVisits>();
         }
     
-        public int id { get; set; }
-        public string name { get; set; }
-        public string industry { get; set; }
-        public Nullable<int> country_id { get; set; }
+        public int StaffID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Role { get; set; }
+        public string Phone { get; set; }
+        public Nullable<System.DateTime> HireDate { get; set; }
     
-        public virtual Countries Countries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Incidents> Incidents { get; set; }
+        public virtual ICollection<Lessons> Lessons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SREMetrics> SREMetrics { get; set; }
+        public virtual ICollection<StaffSchedule> StaffSchedule { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StocksData> StocksData { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Teams> Teams { get; set; }
+        public virtual ICollection<VetVisits> VetVisits { get; set; }
     }
 }
